@@ -1,0 +1,177 @@
+﻿using MarketOtomasyonu.dao;
+using MarketOtomasyonu.enumaration;
+using MarketOtomasyonu.model;
+using Microsoft.Identity.Client;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MarketOtomasyonu.controller
+{
+    public class Controller
+    {
+        Repostory repostory;
+
+        public Controller()
+        {
+            repostory = new Repostory();
+        }
+
+
+        public User login(string kullaniciAdi, string sifre)
+        {
+            User result;
+            if (!string.IsNullOrEmpty(kullaniciAdi) && !string.IsNullOrEmpty(sifre))
+            {
+                result =  repostory.login(kullaniciAdi, sifre);
+                return result;
+            }
+            else
+            {
+                User user = new User();
+                user.status = LoginStatus.eksikParametre;
+                return user;
+            }
+        }
+
+        public List<LoginTable> getLoginTable()
+        {
+            List<LoginTable> loginTableList = repostory.getLoginTable();
+            return loginTableList;
+        }
+
+        public LoginStatus doAuthentication(string kullaniciAdi, string guvenlikSorusu, string guvenlikCevabi)
+        {
+            if (!string.IsNullOrEmpty(kullaniciAdi) && !string.IsNullOrEmpty(guvenlikSorusu) && !string.IsNullOrEmpty(guvenlikCevabi))
+            {
+                LoginStatus result = repostory.doAuthentication(kullaniciAdi, guvenlikSorusu, guvenlikCevabi);
+
+                if (result == LoginStatus.basarili)
+                {
+                    return result;
+                }
+                else
+                {
+                    return LoginStatus.basarisiz;
+                }
+
+
+            }
+            else
+            {
+                return LoginStatus.eksikParametre;
+            }
+            
+        }
+
+        public LoginStatus changePassword(string kullaniciAdi, string sifre)
+        {
+            if (!string.IsNullOrEmpty(kullaniciAdi) && !string.IsNullOrEmpty(sifre))
+            {
+                return repostory.changePassword(kullaniciAdi, sifre);
+            }
+            else
+            {
+                return LoginStatus.eksikParametre;
+            }
+        }
+
+        public string checkEmailAddress(string kullaniciAdi)
+        {
+            return repostory.checkEmailAddress(kullaniciAdi);
+        }
+
+        public Urun urunuGetir(string barkod)
+        {
+            if (!string.IsNullOrEmpty(barkod))
+            {
+                return repostory.urunuGetir(barkod);
+            }
+            return null;
+        }
+
+        public List<User> tumKullanicilariGetir()
+        {
+            Controller controller = new Controller();
+            return repostory.tumKullanicilariGetir();
+
+        }
+
+        public LoginStatus kullaniciEkle(User user)
+        {
+            if (!string.IsNullOrEmpty(user.kullaniciAdi) && !string.IsNullOrEmpty(user.sifre) && !string.IsNullOrEmpty(user.yetki) && !string.IsNullOrEmpty(user.emailAdres) && !string.IsNullOrEmpty(user.guvenlikSorusu) && !string.IsNullOrEmpty(user.guvenlikCevabi))
+            {
+                Controller controller = new Controller();
+                LoginStatus sonuc = repostory.kullaniciEkle(user);
+                return sonuc;
+            }
+            else
+            {
+                return LoginStatus.eksikParametre;
+            }
+        }
+
+        public LoginStatus kullaniciGuncelle(User user)
+        {
+            return repostory.kullaniciGuncelle(user);
+        }
+
+        public LoginStatus kullaniciSil(int id)
+        {
+            if (!string.IsNullOrEmpty(id.ToString()))
+            {
+                return repostory.kullaniciSil(id);
+            }
+            else
+            {
+                return LoginStatus.eksikParametre;
+            }
+
+        }
+
+        public List<Urun> tumUrunleriGetir()
+        {
+            return repostory.tumUrunleriGetir();
+        }
+
+        public LoginStatus urunEkle(Urun urun)
+        {
+            if (!string.IsNullOrEmpty(urun.id) && !string.IsNullOrEmpty(urun.urunIsim) && !string.IsNullOrEmpty(urun.barkodkod))
+            {
+                return repostory.urunEkle(urun);
+            }
+            else
+            {
+                return LoginStatus.eksikParametre;
+            }
+        }
+
+        public LoginStatus urunGuncelle(Urun urun)
+        {
+            if (!string.IsNullOrEmpty(urun.id) && !string.IsNullOrEmpty(urun.urunIsim) && !string.IsNullOrEmpty(urun.barkodkod))
+            {
+                return repostory.urunGuncelle(urun);
+            }
+            else
+            {
+                return LoginStatus.eksikParametre;
+            }
+        }
+
+        public LoginStatus urunSil(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                return repostory.urunSil(id);
+            }
+            else
+            {
+                return LoginStatus.eksikParametre;
+            }
+        }
+
+    }
+}
