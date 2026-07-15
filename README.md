@@ -6,11 +6,11 @@ Uygulama içerisinde farklı kullanıcı panelleri bulunmakta olup, yönetici ve
 
 **Kullanılan Teknolojiler**
 -C#
--.NET Framework
--Windows Forms (WinForms)
--Microsoft SQL Server
--ADO.NET
--Visual Studio
+- .NET Framework
+- Windows Forms (WinForms)
+- Microsoft SQL Server
+- ADO.NET
+- Visual Studio
  
  **Amaç**
 Bu proje, masaüstü uygulama geliştirme ve SQL Server ile veritabanı işlemlerini uygulamalı olarak öğrenmek amacıyla geliştirilmiştir. Kullanıcı yönetimi, ürün işlemleri ve satış süreçlerini tek bir sistem üzerinden yöneterek gerçek bir market otomasyonunun temel yapısını oluşturmayı hedeflemektedir.
